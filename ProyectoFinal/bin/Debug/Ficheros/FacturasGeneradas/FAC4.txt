@@ -1,3 +1,0 @@
-PRD2;Leche;5;10;50
-PRD1;Galletas;3;5;15
-;;;;

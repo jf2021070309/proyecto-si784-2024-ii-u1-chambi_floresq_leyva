@@ -1,3 +1,0 @@
-PRD3;Juguete;5;15;75
-PRD2;Leche;5;10;50
-;;;;
