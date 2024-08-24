@@ -3,3 +3,4 @@
 # proyecto-formatos-02
 Integrantes:
 - Elvis Leyva Sardon
+- Jaime Flores Quispe
