@@ -1,0 +1,48 @@
+name: .NET Core Desktop
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: ProyectoFinal.sln  # Nombre de tu solución
+      Output_Directory: ./bin/${{ matrix.configuration }}/  # Ruta recomendada para archivos .exe
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore the application
+      run: dotnet restore $env:Solution_Name
+
+    - name: Build the project
+      run: dotnet build $env:Solution_Name --configuration ${{ matrix.configuration }}
+
+    - name: Execute unit tests
+      run: dotnet test $env:Solution_Name --configuration ${{ matrix.configuration }} --no-build
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: MyWinFormsApp-${{ matrix.configuration }}
+        path: ${{ env.Output_Directory }}*.exe
