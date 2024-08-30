@@ -24,17 +24,26 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Install .NET Framework Build Tools
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
     - name: Restore the application
-      run: nuget restore ${{ env.Solution_Name }}
+      run: nuget restore $env:Solution_Name
 
     - name: Build the project
-      run: msbuild ${{ env.Solution_Name }} /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" # arquitectura "Any CPU"
+      run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU"
 
     - name: Execute unit tests
-      run: vstest.console ${{ env.Output_Directory }}*.dll
+      run: |
+        # Cambia el directorio a la carpeta bin/Debug o bin/Release
+        cd ./bin/${{ matrix.configuration }}
+        # Ejecuta las pruebas
+        dotnet test *.dll --configuration ${{ matrix.configuration }}
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
