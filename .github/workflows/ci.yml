@@ -36,10 +36,10 @@ jobs:
       run: dotnet restore $env:Solution_Name
 
     - name: Build the project
-      run: dotnet build $env:Solution_Name --configuration ${{ matrix.configuration }}
+      run: dotnet build $env:Solution_Name --configuration ${{ matrix.configuration }} /p:Platform="Any CPU" # arquitectura "Any CPU"
 
     - name: Execute unit tests
-      run: dotnet test $env:Solution_Name --configuration ${{ matrix.configuration }} --no-build
+      run: dotnet test $env:Solution_Name --configuration ${{ matrix.configuration }} --no-build /p:Platform="Any CPU" # arquitectura "Any CPU"
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
