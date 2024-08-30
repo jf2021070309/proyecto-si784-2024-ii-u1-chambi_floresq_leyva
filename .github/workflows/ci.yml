@@ -1,4 +1,4 @@
-name: .NET Core Desktop
+name: .NET Framework Desktop
 
 on:
   push:
@@ -24,22 +24,17 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-
-    - name: Setup MSBuild.exe
+    - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
     - name: Restore the application
-      run: dotnet restore $env:Solution_Name
+      run: nuget restore ${{ env.Solution_Name }}
 
     - name: Build the project
-      run: dotnet build $env:Solution_Name --configuration ${{ matrix.configuration }} /p:Platform="Any CPU" # arquitectura "Any CPU"
+      run: msbuild ${{ env.Solution_Name }} /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" # arquitectura "Any CPU"
 
     - name: Execute unit tests
-      run: dotnet test $env:Solution_Name --configuration ${{ matrix.configuration }} --no-build /p:Platform="Any CPU" # arquitectura "Any CPU"
+      run: vstest.console ${{ env.Output_Directory }}*.dll
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3

@@ -171,6 +171,7 @@
     <Compile Include="RegistroEmpleado.Designer.cs">
       <DependentUpon>RegistroEmpleado.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="ActualizarRegistroEmpleado.resx">
       <DependentUpon>ActualizarRegistroEmpleado.cs</DependentUpon>
     </EmbeddedResource>
