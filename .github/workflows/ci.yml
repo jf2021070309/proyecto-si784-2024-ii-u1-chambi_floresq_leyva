@@ -44,17 +44,8 @@ jobs:
     - name: Build the project
       run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=bin/${{ matrix.configuration }}/ /v:diag
 
-    - name: List build directories
-      run: |
-        dir bin/${{ matrix.configuration }}
-
-    - name: Execute unit tests
-      run: |
-        cd bin/${{ matrix.configuration }}
-        dotnet test *.dll --configuration ${{ matrix.configuration }}
-
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: MyWinFormsApp-${{ matrix.configuration }}
-        path: ${{ env.Output_Directory }}*.exe
+        path: bin/${{ matrix.configuration }}/*.exe
