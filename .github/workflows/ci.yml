@@ -12,7 +12,7 @@ jobs:
       Solution_Name: ProyectoFinal.sln
       Output_Directory: ProyectoFinal/bin/Release/
       Artifact_Base_Directory: ProyectoFinal/artifacts/
-      Timestamp: ${{ github.run_id }} # Usar un identificador único para cada ejecución
+      Timestamp: ${{ github.run_id }}
 
     steps:
       - name: Chequear Código
@@ -29,6 +29,16 @@ jobs:
       - name: Restaurar la Aplicación
         run: nuget restore $env:Solution_Name
 
+      - name: Construir el Proyecto
+        run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory
+
+      - name: Listar Archivos en el Directorio de Construcción
+        run: |
+          Write-Output "Contenido de directorio raiz:"
+          dir
+          Write-Output "Contenido de $env:Output_Directory antes de limpiar:"
+          dir $env:Output_Directory
+
       - name: Limpiar Directorios de Construcción
         run: |
           if (Test-Path "ProyectoFinal/bin") {
@@ -37,18 +47,6 @@ jobs:
           if (Test-Path "ProyectoFinal/obj") {
             Remove-Item -Recurse -Force "ProyectoFinal/obj"
           }
-
-      - name: Construir el Proyecto
-        run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory
-
-      - name: Listar Archivos en el Directorio de Construcción
-        run: |
-          Write-Output "Contenido de directorio raiz:"
-          dir
-          Write-Output "Contenido de directorio ProyectoFinal:"
-          dir ProyectoFinal
-          Write-Output "Contenido de $env:Output_Directory:"
-          dir $env:Output_Directory
 
       - name: Crear Directorio de Artefactos con Marca de Tiempo
         run: |
@@ -76,4 +74,3 @@ jobs:
         with:
           name: MyWinFormsApp-Release
           path: $env:Artifact_Base_Directory$env:Timestamp/**
-
