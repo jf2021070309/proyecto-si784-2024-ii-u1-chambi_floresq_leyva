@@ -13,24 +13,21 @@ jobs:
       Output_Directory: ProyectoFinal/bin/Release/
 
     steps:
-      - name: Chequear Código
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Instalar Herramientas de Construcción de .NET Framework
+      - name: Install .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Configurar MSBuild
-        uses: microsoft/setup-msbuild@v2
-
-      - name: Restaurar la Aplicación
-        run: nuget restore $env:Solution_Name
-
-      - name: Construir el Proyecto
+      - name: Build Project
         run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory
 
-      - name: Listar Archivos en el Directorio de Construcción
+      - name: Print Output Directory
+        run: echo "Output Directory: $env:Output_Directory"
+
+      - name: List Files in Output Directory
         run: |
           Write-Output "Contenido de $env:Output_Directory:"
           dir $env:Output_Directory
