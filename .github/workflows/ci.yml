@@ -40,10 +40,10 @@ jobs:
       shell: pwsh
 
     - name: Build the project
-      run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=ProyectoFinal/bin/${{ matrix.configuration }}/ /v:diag
+      run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory /v:diag
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: MyWinFormsApp-${{ matrix.configuration }}
-        path: ProyectoFinal/bin/${{ matrix.configuration }}/*.exe
+        path: $env:Output_Directory/**
