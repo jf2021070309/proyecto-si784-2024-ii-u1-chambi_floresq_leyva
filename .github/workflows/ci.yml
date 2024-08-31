@@ -35,13 +35,16 @@ jobs:
     - name: Restore the application
       run: nuget restore $env:Solution_Name
 
+    - name: Clean build directories
+      run: |
+        Remove-Item -Recurse -Force bin, obj
+
     - name: Build the project
-      run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU"
+      run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" /p:OutputPath=bin/${{ matrix.configuration }}/ /v:diag
 
     - name: List build directories
       run: |
-        dir bin/Debug
-        dir bin/Release
+        dir bin/${{ matrix.configuration }}
 
     - name: Execute unit tests
       run: |
