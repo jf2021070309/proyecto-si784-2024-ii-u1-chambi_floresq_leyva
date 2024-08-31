@@ -16,7 +16,7 @@ jobs:
 
     env:
       Solution_Name: ProyectoFinal.sln  # Nombre de tu solución
-      Output_Directory: ./bin/${{ matrix.configuration }}/  # Ruta recomendada para archivos .exe
+      Output_Directory: bin/${{ matrix.configuration }}/  # Ruta recomendada para archivos .exe
 
     steps:
     - name: Checkout
@@ -38,10 +38,15 @@ jobs:
     - name: Build the project
       run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU"
 
+    - name: List build directories
+      run: |
+        dir bin/Debug
+        dir bin/Release
+
     - name: Execute unit tests
       run: |
         # Cambia el directorio a la carpeta bin/Debug o bin/Release
-        cd ./bin/${{ matrix.configuration }}
+        cd bin/${{ matrix.configuration }}
         # Ejecuta las pruebas
         dotnet test *.dll --configuration ${{ matrix.configuration }}
 
