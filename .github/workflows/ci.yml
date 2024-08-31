@@ -11,8 +11,6 @@ jobs:
     env:
       Solution_Name: ProyectoFinal.sln
       Output_Directory: ProyectoFinal/bin/Release/
-      Artifact_Base_Directory: ProyectoFinal/artifacts/
-      Timestamp: ${{ github.run_id }}
 
     steps:
       - name: Chequear Código
@@ -34,47 +32,5 @@ jobs:
 
       - name: Listar Archivos en el Directorio de Construcción
         run: |
-          Write-Output "Contenido de directorio raiz:"
-          dir
-          Write-Output "Contenido de $env:Output_Directory antes de limpiar:"
-          dir ProyectoFinal
-          Write-Output "Contenido de bin:"
-          dir ProyectoFinal/bin
-          Write-Output "Contenido de release:"
-          dir ProyectoFinal/bin/release
-
-      - name: Limpiar Directorios de Construcción
-        run: |
-          if (Test-Path "ProyectoFinal/bin") {
-            Remove-Item -Recurse -Force "ProyectoFinal/bin"
-          }
-          if (Test-Path "ProyectoFinal/obj") {
-            Remove-Item -Recurse -Force "ProyectoFinal/obj"
-          }
-
-      - name: Crear Directorio de Artefactos con Marca de Tiempo
-        run: |
-          $artifactDirectory = "$env:Artifact_Base_Directory$env:Timestamp"
-          if (-not (Test-Path $artifactDirectory)) {
-            New-Item -ItemType Directory -Path $artifactDirectory
-          }
-          Write-Output "Directorio de Artefactos creado: $artifactDirectory"
-
-      - name: Mover Archivos al Directorio de Artefactos
-        run: |
-          $artifactDirectory = "$env:Artifact_Base_Directory$env:Timestamp"
-          if (Test-Path $env:Output_Directory) {
-            Move-Item -Path "$env:Output_Directory\*" -Destination $artifactDirectory -Recurse -Force
-          }
-          Write-Output "Archivos movidos a: $artifactDirectory"
-
-      - name: Listar Archivos en el Directorio de Artefactos
-        run: |
-          Write-Output "Contenido de $env:Artifact_Base_Directory:"
-          dir $env:Artifact_Base_Directory
-
-      - name: Subir Artefactos de Construcción
-        uses: actions/upload-artifact@v3
-        with:
-          name: MyWinFormsApp-Release
-          path: $env:Artifact_Base_Directory$env:Timestamp/**
+          Write-Output "Contenido de $env:Output_Directory:"
+          dir $env:Output_Directory
