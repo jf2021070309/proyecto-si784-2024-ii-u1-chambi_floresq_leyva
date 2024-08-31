@@ -17,16 +17,18 @@ jobs:
     steps:
       - name: Chequear Código
         uses: actions/checkout@v4
-        run: echo "Paso 1: Chequear Código completado"
+
       - name: Instalar Herramientas de Construcción de .NET Framework
         uses: actions/setup-dotnet@v4
-        run: echo "Paso 2: Instalar Herramientas de Construcción de .NET completado"
+        with:
+          dotnet-version: '8.0.x'
+
       - name: Configurar MSBuild
         uses: microsoft/setup-msbuild@v2
-        run: echo "Paso 3: Configurar MSBuild completado"
+
       - name: Restaurar la Aplicación
         run: nuget restore $env:Solution_Name
-        run: echo "Paso 4: Restaurar la Aplicación completado"
+
       - name: Limpiar Directorios de Construcción
         run: |
           if (Test-Path "ProyectoFinal/bin") {
@@ -35,19 +37,18 @@ jobs:
           if (Test-Path "ProyectoFinal/obj") {
             Remove-Item -Recurse -Force "ProyectoFinal/obj"
           }
-        run: echo "Paso 5: Limpiar Directorios de Construcción completado"
+
       - name: Construir el Proyecto
         run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory /v:diag
-        run: echo "Paso 6: Construir el Proyecto completado"
+
       - name: Copiar Artifacto al Directorio de Artifactos
         run: |
           if (Test-Path $env:Output_Directory) {
             Copy-Item -Path $env:Output_Directory\* -Destination $env:Artifact_Directory -Recurse -Force
           }
-        run: echo "Paso 7: Copiar Artifacto al Directorio de Artifactos completado"
+
       - name: Subir Artifactos de Construcción
         uses: actions/upload-artifact@v3
         with:
           name: MyWinFormsApp-${{ matrix.configuration }}
           path: $env:Artifact_Directory/**
-        run: echo "Paso 8: Subir Artifactos de Construcción completado"
