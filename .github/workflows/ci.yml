@@ -40,6 +40,12 @@ jobs:
       - name: Construir el Proyecto
         run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory 
 
+      - name: Verificar y Crear Carpeta de Salida
+        run: |
+          if (-not (Test-Path $env:Output_Directory)) {
+            New-Item -ItemType Directory -Path $env:Output_Directory
+          }
+
       - name: Listar Carpetas en el Directorio de Construcción
         run: dir $env:Output_Directory
 
