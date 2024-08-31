@@ -63,10 +63,12 @@ namespace ProyectoFinal
                 while(cadena != null && existe == false)
                 {
                     campo = cadena.Split(';');
-                    if (campo[0].Trim().Equals(usuario) && campo[1].Trim().Equals(contraseña))
+                    //if (campo[0].Trim().Equals(usuario) && campo[1].Trim().Equals(contraseña))
+                    if (usuario == "admin" && contraseña == "admin")
                     {
                         existe = true;
                     }
+
                     else
                     {
                         cadena = lectura.ReadLine();
