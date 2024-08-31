@@ -41,6 +41,11 @@ jobs:
       - name: Construir el Proyecto
         run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory 
 
+      - name: Listar Archivos en el Directorio de Construcción
+        run: |
+          Write-Output "Contenido de $env:Output_Directory:"
+          dir $env:Output_Directory
+
       - name: Crear Directorio de Artefactos con Marca de Tiempo
         run: |
           $artifactDirectory = "$env:Artifact_Base_Directory$env:Timestamp"
@@ -57,8 +62,10 @@ jobs:
           }
           Write-Output "Archivos movidos a: $artifactDirectory"
 
-      - name: Listar Carpetas en el Directorio de Artefactos
-        run: dir $env:Artifact_Base_Directory
+      - name: Listar Archivos en el Directorio de Artefactos
+        run: |
+          Write-Output "Contenido de $env:Artifact_Base_Directory:"
+          dir $env:Artifact_Base_Directory
 
       - name: Subir Artefactos de Construcción
         uses: actions/upload-artifact@v3
