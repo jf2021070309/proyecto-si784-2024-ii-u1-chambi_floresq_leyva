@@ -6,14 +6,13 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
     runs-on: windows-latest
+
     env:
       Solution_Name: ProyectoFinal.sln
-      Output_Directory: ProyectoFinal/bin/${{ matrix.configuration }}/
+      Output_Directory: ProyectoFinal/bin/Release/
       Artifact_Directory: ProyectoFinal/artifacts/
+
     steps:
       - name: Chequear Código
         uses: actions/checkout@v4
@@ -39,7 +38,10 @@ jobs:
           }
 
       - name: Construir el Proyecto
-        run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory /v:diag
+        run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory 
+
+      - name: Listar Carpetas en el Directorio de Construcción
+        run: dir $env:Output_Directory
 
       - name: Copiar Artifacto al Directorio de Artifactos
         run: |
@@ -47,8 +49,11 @@ jobs:
             Copy-Item -Path $env:Output_Directory\* -Destination $env:Artifact_Directory -Recurse -Force
           }
 
+      - name: Listar Carpetas en el Directorio de Artifactos
+        run: dir $env:Artifact_Directory
+
       - name: Subir Artifactos de Construcción
         uses: actions/upload-artifact@v3
         with:
-          name: MyWinFormsApp-${{ matrix.configuration }}
+          name: MyWinFormsApp-Release
           path: $env:Artifact_Directory/**
