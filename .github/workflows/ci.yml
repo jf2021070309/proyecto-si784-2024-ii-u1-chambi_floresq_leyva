@@ -8,6 +8,12 @@ jobs:
   build:
     runs-on: windows-latest
 
+    env:
+      Solution_Name: ProyectoFinal.sln
+      Output_Directory: ProyectoFinal/bin/Release/
+      Artifact_Base_Directory: ProyectoFinal/artifacts/
+      Timestamp: ${{ github.run_id }} # Usar un identificador único para cada ejecución
+
     steps:
       - name: Chequear Código
         uses: actions/checkout@v4
@@ -20,8 +26,8 @@ jobs:
       - name: Configurar MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Restaurar Paquetes NuGet para el Proyecto
-        run: nuget restore ProyectoFinal.sln
+      - name: Restaurar la Aplicación
+        run: nuget restore $env:Solution_Name
 
       - name: Limpiar Directorios de Construcción
         run: |
@@ -33,18 +39,20 @@ jobs:
           }
 
       - name: Construir el Proyecto
-        run: msbuild ProyectoFinal.sln /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=ProyectoFinal/bin/Release/ 
+        run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory
 
       - name: Listar Archivos en el Directorio de Construcción
         run: |
-          Write-Output "Contenido del directorio raíz:"
-          dir 
-          Write-Output "Contenido del directorio de salida:"
-          dir ProyectoFinal/bin/Release/
+          Write-Output "Contenido de directorio raiz:"
+          dir
+          Write-Output "Contenido de directorio ProyectoFinal:"
+          dir ProyectoFinal
+          Write-Output "Contenido de $env:Output_Directory:"
+          dir $env:Output_Directory
 
       - name: Crear Directorio de Artefactos con Marca de Tiempo
         run: |
-          $artifactDirectory = "ProyectoFinal/artifacts/$env:GITHUB_RUN_ID"
+          $artifactDirectory = "$env:Artifact_Base_Directory$env:Timestamp"
           if (-not (Test-Path $artifactDirectory)) {
             New-Item -ItemType Directory -Path $artifactDirectory
           }
@@ -52,19 +60,20 @@ jobs:
 
       - name: Mover Archivos al Directorio de Artefactos
         run: |
-          $artifactDirectory = "ProyectoFinal/artifacts/$env:GITHUB_RUN_ID"
-          if (Test-Path "ProyectoFinal/bin/Release/") {
-            Move-Item -Path "ProyectoFinal/bin/Release/*" -Destination $artifactDirectory -Recurse -Force
+          $artifactDirectory = "$env:Artifact_Base_Directory$env:Timestamp"
+          if (Test-Path $env:Output_Directory) {
+            Move-Item -Path "$env:Output_Directory\*" -Destination $artifactDirectory -Recurse -Force
           }
           Write-Output "Archivos movidos a: $artifactDirectory"
 
       - name: Listar Archivos en el Directorio de Artefactos
         run: |
-          Write-Output "Contenido del directorio de artefactos:"
-          dir ProyectoFinal/artifacts/$env:GITHUB_RUN_ID
+          Write-Output "Contenido de $env:Artifact_Base_Directory:"
+          dir $env:Artifact_Base_Directory
 
       - name: Subir Artefactos de Construcción
         uses: actions/upload-artifact@v3
         with:
           name: MyWinFormsApp-Release
-          path: ProyectoFinal/artifacts/$env:GITHUB_RUN_ID/**
+          path: $env:Artifact_Base_Directory$env:Timestamp/**
+
