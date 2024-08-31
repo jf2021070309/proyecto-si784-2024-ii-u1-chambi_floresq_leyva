@@ -37,7 +37,11 @@ jobs:
           Write-Output "Contenido de directorio raiz:"
           dir
           Write-Output "Contenido de $env:Output_Directory antes de limpiar:"
-          dir $env:Output_Directory
+          dir ProyectoFinal
+          Write-Output "Contenido de bin:"
+          dir ProyectoFinal/bin
+          Write-Output "Contenido de release:"
+          dir ProyectoFinal/bin/release
 
       - name: Limpiar Directorios de Construcción
         run: |
