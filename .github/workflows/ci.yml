@@ -3,8 +3,6 @@ name: .NET Framework Desktop
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
@@ -16,13 +14,18 @@ jobs:
 
     env:
       Solution_Name: ProyectoFinal.sln
-      Output_Directory: bin/${{ matrix.configuration }}/
+      Output_Directory: ProyectoFinal/bin/${{ matrix.configuration }}/
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+
+    - name: Install .NET Framework Build Tools
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
@@ -32,21 +35,15 @@ jobs:
 
     - name: Clean build directories
       run: |
-        if (Test-Path "bin") { Remove-Item -Recurse -Force "bin" }
-        if (Test-Path "obj") { Remove-Item -Recurse -Force "obj" }
+        if (Test-Path "ProyectoFinal/bin") { Remove-Item -Recurse -Force "ProyectoFinal/bin" }
+        if (Test-Path "ProyectoFinal/obj") { Remove-Item -Recurse -Force "ProyectoFinal/obj" }
       shell: pwsh
 
     - name: Build the project
-      run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=bin/${{ matrix.configuration }}/ /v:diag
-
-    - name: List build directory after build
-      run: |
-        dir bin/${{ matrix.configuration }}
-      shell: pwsh
+      run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=ProyectoFinal/bin/${{ matrix.configuration }}/ /v:diag
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: MyWinFormsApp-${{ matrix.configuration }}
-        path: bin/${{ matrix.configuration }}/*.exe
-        if-no-files-found: warn
+        path: ProyectoFinal/bin/${{ matrix.configuration }}/*.exe
