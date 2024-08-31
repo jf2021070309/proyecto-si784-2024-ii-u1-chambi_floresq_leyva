@@ -18,7 +18,7 @@ jobs:
       - name: Chequear Código
         uses: actions/checkout@v4
         run: echo "Paso 1: Chequear Código completado"
-      - name: Instalar Herramientas de Construcción de .NET
+      - name: Instalar Herramientas de Construcción de .NET Framework
         uses: actions/setup-dotnet@v4
         run: echo "Paso 2: Instalar Herramientas de Construcción de .NET completado"
       - name: Configurar MSBuild
