@@ -24,11 +24,6 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Install .NET Framework Build Tools
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
-
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
@@ -44,7 +39,7 @@ jobs:
     - name: Build the project
       run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=bin/${{ matrix.configuration }}/ /v:diag
 
-    - name: List build artifacts
+    - name: List build directory after build
       run: |
         dir bin/${{ matrix.configuration }}
       shell: pwsh
@@ -54,3 +49,4 @@ jobs:
       with:
         name: MyWinFormsApp-${{ matrix.configuration }}
         path: bin/${{ matrix.configuration }}/*.exe
+        if-no-files-found: warn
