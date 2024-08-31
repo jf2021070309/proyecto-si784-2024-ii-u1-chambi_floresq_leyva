@@ -43,8 +43,8 @@ jobs:
 
       - name: Listar Archivos en el Directorio de Construcción
         run: |
-          Write-Output "Contenido de $env:Output_Directory:"
-          dir $env:Output_Directory
+          Write-Output "Contenido de directorio raiz:"
+          dir 
 
       - name: Crear Directorio de Artefactos con Marca de Tiempo
         run: |
