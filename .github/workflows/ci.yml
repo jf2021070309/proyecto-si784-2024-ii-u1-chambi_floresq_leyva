@@ -11,7 +11,8 @@ jobs:
     env:
       Solution_Name: ProyectoFinal.sln
       Output_Directory: ProyectoFinal/bin/Release/
-      Artifact_Directory: ProyectoFinal/artifacts/
+      Artifact_Base_Directory: ProyectoFinal/artifacts/
+      Timestamp: ${{ github.run_id }} # Usar un identificador único para cada ejecución
 
     steps:
       - name: Chequear Código
@@ -40,26 +41,27 @@ jobs:
       - name: Construir el Proyecto
         run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory 
 
-      - name: Verificar y Crear Carpeta de Salida
+      - name: Crear Directorio de Artefactos con Marca de Tiempo
         run: |
-          if (-not (Test-Path $env:Output_Directory)) {
-            New-Item -ItemType Directory -Path $env:Output_Directory
+          $artifactDirectory = "$env:Artifact_Base_Directory$env:Timestamp"
+          if (-not (Test-Path $artifactDirectory)) {
+            New-Item -ItemType Directory -Path $artifactDirectory
           }
-
-      - name: Listar Carpetas en el Directorio de Construcción
-        run: dir $env:Output_Directory
-
-      - name: Copiar Artifacto al Directorio de Artifactos
+          Write-Output "Directorio de Artefactos creado: $artifactDirectory"
+        
+      - name: Mover Archivos al Directorio de Artefactos
         run: |
+          $artifactDirectory = "$env:Artifact_Base_Directory$env:Timestamp"
           if (Test-Path $env:Output_Directory) {
-            Copy-Item -Path $env:Output_Directory\* -Destination $env:Artifact_Directory -Recurse -Force
+            Move-Item -Path "$env:Output_Directory\*" -Destination $artifactDirectory -Recurse -Force
           }
+          Write-Output "Archivos movidos a: $artifactDirectory"
 
-      - name: Listar Carpetas en el Directorio de Artifactos
-        run: dir $env:Artifact_Directory
+      - name: Listar Carpetas en el Directorio de Artefactos
+        run: dir $env:Artifact_Base_Directory
 
-      - name: Subir Artifactos de Construcción
+      - name: Subir Artefactos de Construcción
         uses: actions/upload-artifact@v3
         with:
           name: MyWinFormsApp-Release
-          path: $env:Artifact_Directory/**
+          path: $env:Artifact_Base_Directory$env:Timestamp/**
