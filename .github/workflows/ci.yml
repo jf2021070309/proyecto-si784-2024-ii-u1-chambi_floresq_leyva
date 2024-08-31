@@ -16,18 +16,24 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
+      # Instalar .NET Framework (no es necesario si ya está preinstalado en el runner de GitHub)
+      # - name: Install .NET Framework
+      #   run: |
+      #     # Aquí puedes instalar .NET Framework si fuera necesario, 
+      #     # pero en los runners de GitHub Actions ya está instalado.
 
       - name: Build Project
-        run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory
+        run: |
+          msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory
+        shell: pwsh
 
       - name: Print Output Directory
-        run: echo "Output Directory: $env:Output_Directory"
+        run: |
+          Write-Output "Output Directory: $env:Output_Directory"
+        shell: pwsh
 
       - name: List Files in Output Directory
         run: |
           Write-Output "Contenido de $env:Output_Directory:"
-          dir $env:Output_Directory
+          Get-ChildItem -Path $env:Output_Directory
+        shell: pwsh
