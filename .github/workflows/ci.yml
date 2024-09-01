@@ -33,8 +33,10 @@ jobs:
           Write-Output "Resultado del Build:"
           Get-Content build.log
 
-      - name: Subir build.log como Artefacto
+      - name: Cargar Artefacto de Construcción
         uses: actions/upload-artifact@v3
         with:
-          name: build-log
-          path: build.log
+          name: build-artifact
+          path: $env:Output_Directory
+          if-no-files-found: error
+          retention-days: 30
