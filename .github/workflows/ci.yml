@@ -8,10 +8,6 @@ jobs:
   build:
     runs-on: windows-latest
 
-    env:
-      Solution_Name: ProyectoFinal.sln
-      Output_Directory: ProyectoFinal/bin/Release/
-
     steps:
       - name: Chequear Código
         uses: actions/checkout@v4
@@ -24,19 +20,27 @@ jobs:
       - name: Configurar MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Restaurar Paquetes NuGet
-        run: nuget restore $env:Solution_Name
+      - name: Restaurar la Aplicación
+        run: nuget restore ProyectoFinal.sln
+
+      - name: Limpiar Directorios de Construcción
+        run: |
+          if (Test-Path "${{ github.workspace }}/ProyectoFinal/bin") {
+            Remove-Item -Recurse -Force "${{ github.workspace }}/ProyectoFinal/bin"
+          }
+          if (Test-Path "${{ github.workspace }}/ProyectoFinal/obj") {
+            Remove-Item -Recurse -Force "${{ github.workspace }}/ProyectoFinal/obj"
+          }
 
       - name: Construir el Proyecto
-        run: |
-          msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory | Tee-Object -FilePath build.log
-          Write-Output "Resultado del Build:"
-          Get-Content build.log
+        run: msbuild ProyectoFinal.sln /p:Configuration=Release /p:Platform="Any CPU"
 
-      - name: Cargar Artefacto de Construcción
+      - name: Verificar Directorios y Archivos
+        run: |
+          dir ${{ github.workspace }}/ProyectoFinal/bin/Release/
+
+      - name: Subir Artefactos
         uses: actions/upload-artifact@v3
         with:
-          name: build-artifact
-          path: $env:Output_Directory
-          if-no-files-found: error
-          retention-days: 30
+          name: build-artifacts
+          path: ${{ github.workspace }}/ProyectoFinal/bin/Release/
