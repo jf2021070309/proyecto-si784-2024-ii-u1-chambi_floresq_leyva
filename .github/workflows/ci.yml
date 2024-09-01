@@ -27,15 +27,6 @@ jobs:
       - name: Restaurar Paquetes NuGet
         run: nuget restore $env:Solution_Name
 
-      - name: Limpiar Directorios de Construcción
-        run: |
-          if (Test-Path $env:Output_Directory) {
-            Remove-Item -Recurse -Force $env:Output_Directory
-          }
-          if (Test-Path "ProyectoFinal/obj") {
-            Remove-Item -Recurse -Force "ProyectoFinal/obj"
-          }
-
       - name: Construir el Proyecto
         run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory 
 
