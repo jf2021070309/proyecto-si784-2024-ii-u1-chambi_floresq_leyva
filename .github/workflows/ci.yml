@@ -35,3 +35,13 @@ jobs:
       - name: Construir el Proyecto
         run: msbuild ProyectoFinal.sln /p:Configuration=Release /p:Platform="Any CPU"
 
+      - name: Verificar Directorios y Archivos
+        run: |
+          dir ${{ github.workspace }}/ProyectoFinal/bin/Release/
+
+      - name: Subir Artefactos
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: ${{ github.workspace }}/ProyectoFinal/bin/Release/
+
