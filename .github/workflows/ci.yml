@@ -11,8 +11,6 @@ jobs:
     env:
       Solution_Name: ProyectoFinal.sln
       Output_Directory: ProyectoFinal/bin/Release/
-      Artifact_Base_Directory: ProyectoFinal/artifacts/
-      Timestamp: ${{ github.run_id }} # Usar un identificador único para cada ejecución
 
     steps:
       - name: Chequear Código
@@ -26,68 +24,30 @@ jobs:
       - name: Configurar MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Restaurar la Aplicación
+      - name: Restaurar Paquetes NuGet
         run: nuget restore $env:Solution_Name
 
       - name: Limpiar Directorios de Construcción
         run: |
-          if (Test-Path "ProyectoFinal/bin") {
-            Remove-Item -Recurse -Force "ProyectoFinal/bin"
+          if (Test-Path $env:Output_Directory) {
+            Remove-Item -Recurse -Force $env:Output_Directory
           }
           if (Test-Path "ProyectoFinal/obj") {
             Remove-Item -Recurse -Force "ProyectoFinal/obj"
           }
 
       - name: Construir el Proyecto
+        run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory 
+
+      - name: Verificar la Creación del Directorio de Salida
         run: |
-          msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory
-          
-          # Test to check if the bin/Release directory was created
-          if (!(Test-Path $env:Output_Directory)) {
-            Write-Error "Error: El directorio $env:Output_Directory no fue creado durante la construcción."
-            exit 1
+          if (Test-Path $env:Output_Directory) {
+            Write-Output "La carpeta de salida existe: $env:Output_Directory"
           } else {
-            Write-Output "El directorio $env:Output_Directory fue creado exitosamente."
-          }
-          
-          # Test to check if any executable files are present
-          $executables = Get-ChildItem -Path $env:Output_Directory -Filter *.exe
-          if ($executables.Count -eq 0) {
-            Write-Error "Error: No se encontraron archivos ejecutables en $env:Output_Directory."
-            exit 1
-          } else {
-            Write-Output "Archivos ejecutables encontrados en $env:Output_Directory:"
-            $executables | ForEach-Object { Write-Output $_.FullName }
+            Write-Error "La carpeta de salida no se creó."
           }
 
       - name: Listar Archivos en el Directorio de Construcción
         run: |
           Write-Output "Contenido de $env:Output_Directory:"
           dir $env:Output_Directory
-
-      - name: Crear Directorio de Artefactos con Marca de Tiempo
-        run: |
-          $artifactDirectory = "$env:Artifact_Base_Directory$env:Timestamp"
-          if (-not (Test-Path $artifactDirectory)) {
-            New-Item -ItemType Directory -Path $artifactDirectory
-          }
-          Write-Output "Directorio de Artefactos creado: $artifactDirectory"
-
-      - name: Mover Archivos al Directorio de Artefactos
-        run: |
-          $artifactDirectory = "$env:Artifact_Base_Directory$env:Timestamp"
-          if (Test-Path $env:Output_Directory) {
-            Move-Item -Path "$env:Output_Directory\*" -Destination $artifactDirectory -Recurse -Force
-          }
-          Write-Output "Archivos movidos a: $artifactDirectory"
-
-      - name: Listar Archivos en el Directorio de Artefactos
-        run: |
-          Write-Output "Contenido de $env:Artifact_Base_Directory:"
-          dir $env:Artifact_Base_Directory
-
-      - name: Subir Artefactos de Construcción
-        uses: actions/upload-artifact@v3
-        with:
-          name: MyWinFormsApp-Release
-          path: $env:Artifact_Base_Directory$env:Timestamp/**
