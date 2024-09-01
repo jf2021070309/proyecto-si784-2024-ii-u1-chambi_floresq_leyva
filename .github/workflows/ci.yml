@@ -6,41 +6,38 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
     runs-on: windows-latest
 
+    env:
+      Nombre_Solucion: ProyectoFinal.sln
+      Directorio_Salida: ProyectoFinal/bin/${{ matrix.configuration }}/
+
     steps:
-      - name: Chequear Código
-        uses: actions/checkout@v4
+    - name: Verificar código
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-      - name: Instalar Herramientas de Construcción de .NET Framework
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
+    - name: Instalar herramientas de construcción de .NET Framework
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
 
-      - name: Configurar MSBuild
-        uses: microsoft/setup-msbuild@v2
+    - name: Configurar MSBuild
+      uses: microsoft/setup-msbuild@v2
 
-      - name: Restaurar la Aplicación
-        run: nuget restore ProyectoFinal.sln
+    - name: Restaurar la aplicación
+      run: nuget restore $env:Nombre_Solucion
 
-      - name: Limpiar Directorios de Construcción
-        run: |
-          if (Test-Path "${{ github.workspace }}/ProyectoFinal/bin") {
-            Remove-Item -Recurse -Force "${{ github.workspace }}/ProyectoFinal/bin"
-          }
-          if (Test-Path "${{ github.workspace }}/ProyectoFinal/obj") {
-            Remove-Item -Recurse -Force "${{ github.workspace }}/ProyectoFinal/obj"
-          }
+    - name: Limpiar directorios de construcción
+      run: |
+        if (Test-Path "ProyectoFinal/bin") { Remove-Item -Recurse -Force "ProyectoFinal/bin" }
+        if (Test-Path "ProyectoFinal/obj") { Remove-Item -Recurse -Force "ProyectoFinal/obj" }
+      shell: pwsh
 
-      - name: Construir el Proyecto
-        run: msbuild ProyectoFinal.sln /p:Configuration=Release /p:Platform="Any CPU"
-
-      - name: Verificar Directorios y Archivos
-        run: |
-          dir ${{ github.workspace }}/ProyectoFinal/bin/Release/
-
-      - name: Subir Artefactos
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-artifacts
-          path: ${{ github.workspace }}/ProyectoFinal/bin/Release/
+    - name: Construir el proyecto
+      run: msbuild $env:Nombre_Solucion /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Directorio_Salida /v:diag

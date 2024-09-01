@@ -14,8 +14,6 @@ namespace ProyectoFinal
 {
     public partial class ActualizarRegistroEmpleado : Form
     {
-
-        StreamReader lectura;
         bool existe = false;
         string codigo, nomemp, apeemp, dniemp, Fechnac, genero, telf, Fechini, cargo, horario;
         int sueldo;
@@ -41,7 +39,6 @@ namespace ProyectoFinal
 
         private void btnGuardar_Click_1(object sender, EventArgs e)
         {
-            string ubicacion = ".\\Ficheros\\empleados.txt";
             int lineaAEditar = ubicacionfila;
 
             //llamamos a la funcion recopilarinformacion que contiene los datos ingresados en el form
@@ -50,24 +47,6 @@ namespace ProyectoFinal
             string nuevaLinea = codigo + ";" + nomemp + ";" + apeemp + ";" + dniemp + ";" + Fechnac +
                                             ";" + genero + ";" + telf + ";" + Fechini + ";" + cargo +
                                             ";" + horario + ";" + sueldo;
-            List<string> lineas = File.ReadAllLines(ubicacion).ToList();
-            if (lineaAEditar >= 0 && lineaAEditar < lineas.Count)
-            {
-                // Modificar la línea en la lista
-                lineas[lineaAEditar] = nuevaLinea;
-
-                // Sobrescribir el contenido del archivo con las líneas actualizadas
-                File.WriteAllLines(ubicacion, lineas);
-                MessageBox.Show("Se Ha Actualizado los Datos Correctamente.", "Empleado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Limpieza();
-                btnBuscar.Enabled = true;
-                
-;            }
-            else
-            {
-                MessageBox.Show("La línea especificada no existe en el archivo.");
-            }
-
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -86,67 +65,8 @@ namespace ProyectoFinal
         }
         public void Buscarempleado()
         {
-            int numerofila = 0;
-            String[] campo = new string[11];
-            char[] separador = { ';' };
             string busqueda;
-            string cadena;
-            try
-            {
-                lectura = File.OpenText(".\\Ficheros\\empleados.txt");
-                busqueda = txtCodigo.Text;
-                cadena = lectura.ReadLine();
-
-                while (cadena != null && existe == false)
-                {
-
-                    campo = cadena.Split(separador);
-
-                    if (campo[0].Trim().Equals(busqueda))
-                    {
-                        ubicacionfila = numerofila;
-                        txtNombre.Text = campo[1];
-                        txtApellido.Text = campo[2];
-                        txtDni.Text = campo[3];
-                        txtTelefono.Text = campo[6];
-                        txtCargo.Text = campo[8];
-                        txtSueldo.Text = campo[10];
-                        existe = true;
-                        //habilitamos la edicion de datos para poder editar :
-                        txtCodigo.Enabled = false;
-                        txtNombre.Enabled = true;
-                        txtApellido.Enabled = true;
-                        txtDni.Enabled = true;
-                        dtpFechaNacimiento.Enabled = true;
-                        cmbGenero.Enabled = true;
-                        txtTelefono.Enabled = true;
-                        dtpFechaInicio.Enabled = true;
-                        txtCargo.Enabled = true;
-                        txtSueldo.Enabled = true;
-                        cmbHorario.Enabled = true;
-                        btnGuardar.Enabled = true;
-                        btnBuscar.Enabled = false;
-                        //
-                    }
-                    else
-                    {
-                        cadena = lectura.ReadLine();
-                    }
-                    numerofila++;
-
-                }
-                if (existe == false)
-                {
-                    MessageBox.Show("El empleado no existe. ", "Empleados", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                lectura.Close();
-
-            }
-
-            catch (FileNotFoundException ex)
-            {
-                MessageBox.Show("Error:  " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            busqueda = txtCodigo.Text;
         }
 
         private void ActualizarRegistroEmpleado_Load(object sender, EventArgs e)

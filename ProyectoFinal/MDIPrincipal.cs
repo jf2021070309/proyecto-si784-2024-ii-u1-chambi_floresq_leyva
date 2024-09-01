@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Microsoft.VisualBasic;
+using ProyectoFinal.Modelos;
+
 namespace ProyectoFinal
 {
     public partial class MDIPrincipal : Form
@@ -101,12 +103,12 @@ namespace ProyectoFinal
 
         private void registroDePagosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            FormRegistrodePagos RegistroDPagos = new FormRegistrodePagos();
-            RegistroDPagos.MdiParent = this;
-            RegistroDPagos.Show();
+            RegistrarCliente Rcliente = new RegistrarCliente();
+            Rcliente.MdiParent = this;
+            Rcliente.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != RegistroDPagos)
+                if (formHijo != Rcliente)
                 {
                     formHijo.Close();
                 }
@@ -204,7 +206,7 @@ namespace ProyectoFinal
 
         private void registroDeEmpleadosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            RegistroEmpleado registraremp = new RegistroEmpleado();
+            RegistrarEmpleado registraremp = new RegistrarEmpleado();
             registraremp.MdiParent = this;
             registraremp.Show();
             foreach (Form formHijo in this.MdiChildren)
@@ -218,7 +220,7 @@ namespace ProyectoFinal
 
         private void registroDeEmpleadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegistroEmpleado registraremp = new RegistroEmpleado();
+            RegistrarEmpleado registraremp = new RegistrarEmpleado();
             registraremp.MdiParent = this;
             registraremp.Show();
             foreach (Form formHijo in this.MdiChildren)
@@ -237,12 +239,12 @@ namespace ProyectoFinal
 
         private void registroDeClienteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegistrarCliente registrarcliente = new RegistrarCliente();
-            registrarcliente.MdiParent = this;
-            registrarcliente.Show();
+            FormHistorialClinico Historiales = new FormHistorialClinico();
+            Historiales.MdiParent = this;
+            Historiales.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != registrarcliente)
+                if (formHijo != Historiales)
                 {
                     formHijo.Close();
                 }
@@ -265,26 +267,17 @@ namespace ProyectoFinal
 
         private void reporteDeIngresosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            FormReportedeIngresos reporteIngreso = new FormReportedeIngresos();
-            reporteIngreso.MdiParent = this;
-            reporteIngreso.Show();
-            foreach (Form formHijo in this.MdiChildren)
-            {
-                if (formHijo != reporteIngreso)
-                {
-                    formHijo.Close();
-                }
-            }
+
         }
 
         private void reporteDeIngresosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormReportedeIngresos reporteIngreso = new FormReportedeIngresos();
-            reporteIngreso.MdiParent = this;
-            reporteIngreso.Show();
+            FormReporte_Clientes Rcliente = new FormReporte_Clientes();
+            Rcliente.MdiParent = this;
+            Rcliente.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != reporteIngreso)
+                if (formHijo != Rcliente)
                 {
                     formHijo.Close();
                 }
@@ -293,119 +286,89 @@ namespace ProyectoFinal
 
         private void reporteDeGastosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            FormReporteGastos reporteGastos = new FormReporteGastos();
-            reporteGastos.MdiParent = this;
-            reporteGastos.Show();
-            foreach (Form formHijo in this.MdiChildren)
-            {
-                if (formHijo != reporteGastos)
-                {
-                    formHijo.Close();
-                }
-            }
+
         }
 
         private void reporteDeGastosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormReporteGastos reporteGastos = new FormReporteGastos();
-            reporteGastos.MdiParent = this;
-            reporteGastos.Show();
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FormReporte_Clientes Rcliente = new FormReporte_Clientes();
+            Rcliente.MdiParent = this;
+            Rcliente.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != reporteGastos)
+                if (formHijo != Rcliente)
                 {
                     formHijo.Close();
                 }
             }
         }
 
-        private void reporteDePacientesAtendidosToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            FormReportePacientesAtendidos RpacientesAtendidos = new FormReportePacientesAtendidos();
-            RpacientesAtendidos.MdiParent = this;
-            RpacientesAtendidos.Show();
+            FormReporte_Vacunas Rvacunas = new FormReporte_Vacunas();
+            Rvacunas.MdiParent = this;
+            Rvacunas.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != RpacientesAtendidos)
+                if (formHijo != Rvacunas)
                 {
                     formHijo.Close();
                 }
             }
         }
 
-        private void reporteDePacientesAtendidosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void reporteDeHistorialClínicoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormReportePacientesAtendidos RpacientesAtendidos = new FormReportePacientesAtendidos();
-            RpacientesAtendidos.MdiParent = this;
-            RpacientesAtendidos.Show();
+            FormReporte_Historial_Clinico RHclínico = new FormReporte_Historial_Clinico();
+            RHclínico.MdiParent = this;
+            RHclínico.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != RpacientesAtendidos)
+                if (formHijo != RHclínico)
                 {
                     formHijo.Close();
                 }
             }
         }
 
-        private void reporteDeHorarioDePersonalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void reporteDePacientesPorDueñoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormReporteHorarioPersonal RPersonal = new FormReporteHorarioPersonal();
-            RPersonal.MdiParent = this;
-            RPersonal.Show();
+            FormReporte_Paciente_DNI_Cliente RPxdueño = new FormReporte_Paciente_DNI_Cliente();
+            RPxdueño.MdiParent = this;
+            RPxdueño.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != RPersonal)
+                if (formHijo != RPxdueño)
                 {
                     formHijo.Close();
                 }
             }
         }
 
-        private void reporteDeHorariosDelPersonalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void reporteEstadísticoDePacientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormReporteHorarioPersonal RPersonal = new FormReporteHorarioPersonal();
-            RPersonal.MdiParent = this;
-            RPersonal.Show();
-            foreach (Form formHijo in this.MdiChildren)
-            {
-                if (formHijo != RPersonal)
-                {
-                    formHijo.Close();
-                }
-            }
-        }
 
-        private void actualizarRegistrosToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ActualizarRegistroEmpleado ActualizarPersonal = new ActualizarRegistroEmpleado();
-            ActualizarPersonal.MdiParent = this;
-            ActualizarPersonal.Show();
+            FormReporte_Estadistica_Pacientes REP = new FormReporte_Estadistica_Pacientes();
+            REP.MdiParent = this;
+            REP.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != ActualizarPersonal)
+                if (formHijo != REP)
                 {
                     formHijo.Close();
                 }
             }
-        }
 
-        private void actualizarRegistroToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            ActualizarRegistroEmpleado ActualizarPersonal = new ActualizarRegistroEmpleado();
-            ActualizarPersonal.MdiParent = this;
-            ActualizarPersonal.Show();
-            foreach (Form formHijo in this.MdiChildren)
-            {
-                if (formHijo != ActualizarPersonal)
-                {
-                    formHijo.Close();
-                }
-            }
         }
 
         private void accesoAHistoriasClinicasToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            FormHistorialVacunacion Historiales = new FormHistorialVacunacion();
+            FormHistorialClinico Historiales = new FormHistorialClinico();
             Historiales.MdiParent = this;
             Historiales.Show();
             foreach (Form formHijo in this.MdiChildren)
@@ -417,28 +380,83 @@ namespace ProyectoFinal
             }
         }
 
-        private void registroDePacientesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void registroDeVacunaciónToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegistrarPaciente RegistroPacientes = new RegistrarPaciente();
-            RegistroPacientes.MdiParent = this;
-            RegistroPacientes.Show();
+            FormRegistrarVacunacion Historiales = new FormRegistrarVacunacion();
+            Historiales.MdiParent = this;
+            Historiales.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != RegistroPacientes)
+                if (formHijo != Historiales)
                 {
                     formHijo.Close();
                 }
             }
         }
 
-        private void accesoAHistoriasClinicasToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FormHistorialVacunacion Historiales = new FormHistorialVacunacion();
+        private void registroDePacienteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {  
+            RegistrarPaciente Historiales = new RegistrarPaciente();
             Historiales.MdiParent = this;
             Historiales.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
                 if (formHijo != Historiales)
+                {
+                    formHijo.Close();
+                }
+            }
+        }
+
+        private void registroDeDesparacitaciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormRegistrarDesparasitacion desparasitacion = new FormRegistrarDesparasitacion();
+            desparasitacion.MdiParent = this;
+            desparasitacion.Show();
+            foreach (Form formHijo in this.MdiChildren)
+            {
+                if (formHijo != desparasitacion)
+                {
+                    formHijo.Close();
+                }
+            }
+        }
+
+        private void registroDeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmRecetario recetario= new FrmRecetario();
+            recetario.MdiParent = this;
+            recetario.Show();
+            foreach (Form formHijo in this.MdiChildren)
+            {
+                if (formHijo != recetario)
+                {
+                    formHijo.Close();
+                }
+            }
+        }
+
+        private void abastecimientoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormAbastecimiento abastecimiento = new FormAbastecimiento();
+            abastecimiento.MdiParent = this;
+            abastecimiento.Show();
+            foreach (Form formHijo in this.MdiChildren)
+            {
+                if (formHijo != abastecimiento)
+                {
+                    formHijo.Close();
+                }
+            }
+        }
+        private void abastecimientoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FormAbastecimiento abastecimiento = new FormAbastecimiento();
+            abastecimiento.MdiParent = this;
+            abastecimiento.Show();
+            foreach (Form formHijo in this.MdiChildren)
+            {
+                if (formHijo != abastecimiento)
                 {
                     formHijo.Close();
                 }
@@ -447,68 +465,135 @@ namespace ProyectoFinal
 
         private void registroDePacienteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegistrarPaciente RegistroPacientes = new RegistrarPaciente();
-            RegistroPacientes.MdiParent = this;
-            RegistroPacientes.Show();
+            FormRegistrarVacunacion vacunas = new FormRegistrarVacunacion();
+            vacunas.MdiParent = this;
+            vacunas.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != RegistroPacientes)
+                if (formHijo != vacunas)
                 {
                     formHijo.Close();
                 }
             }
         }
 
-        private void facturacionToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void accesoAHistoriasClinicasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormFacturacion FormularioFacturacion = new FormFacturacion();
-            FormularioFacturacion.MdiParent = this;
-            FormularioFacturacion.Show();
+            FormRegistrarDesparasitacion desparasitacion = new FormRegistrarDesparasitacion();
+            desparasitacion.MdiParent = this;
+            desparasitacion.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != FormularioFacturacion)
+                if (formHijo != desparasitacion)
                 {
                     formHijo.Close();
                 }
             }
         }
 
-        
+        private void registroDeRecetaciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmRecetario recetario = new FrmRecetario();
+            recetario.MdiParent = this;
+            recetario.Show();
+            foreach (Form formHijo in this.MdiChildren)
+            {
+                if (formHijo != recetario)
+                {
+                    formHijo.Close();
+                }
+            }
+        }
+
+        private void registroDePagosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RegistrarCliente Rcliente = new RegistrarCliente();
+            Rcliente.MdiParent = this;
+            Rcliente.Show();
+            foreach (Form formHijo in this.MdiChildren)
+            {
+                if (formHijo != Rcliente)
+                {
+                    formHijo.Close();
+                }
+            }
+        }
 
         private void facturacionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormFacturacion FormularioFacturacion = new FormFacturacion();
-            FormularioFacturacion.MdiParent = this;
-            FormularioFacturacion.Show();
+            RegistrarPaciente paciente = new RegistrarPaciente();
+            paciente.MdiParent = this;
+            paciente.Show();
             foreach (Form formHijo in this.MdiChildren)
             {
-                if (formHijo != FormularioFacturacion)
+                if (formHijo != paciente)
                 {
                     formHijo.Close();
                 }
             }
         }
 
-        private void horariosDeEmpleadosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void reporteDeHorariosDelPersonalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            FormReporte_Vacunas Rvacunas = new FormReporte_Vacunas();
+            Rvacunas.MdiParent = this;
+            Rvacunas.Show();
+            foreach (Form formHijo in this.MdiChildren)
+            {
+                if (formHijo != Rvacunas)
+                {
+                    formHijo.Close();
+                }
+            }
         }
 
-        private void administrarToolStripMenuItem_Click(object sender, EventArgs e)
+        private void reporteHistorialClínicoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string usuario,clave;
-
-            usuario= Interaction.InputBox("Ingrese usuario", "Usuario");
-            clave= Interaction.InputBox("Ingrese clave", "Clave");
-            if (usuario.Equals("admin")&&clave.Equals("admin"))
+            FormReporte_Historial_Clinico RHclínico = new FormReporte_Historial_Clinico();
+            RHclínico.MdiParent = this;
+            RHclínico.Show();
+            foreach (Form formHijo in this.MdiChildren)
             {
-                FormAdmin admin= new FormAdmin();
-                this.Hide();
-                admin.Show();
+                if (formHijo != RHclínico)
+                {
+                    formHijo.Close();
+                }
             }
-            else
+        }
+
+        private void reporteDePacientesPorDueñoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FormReporte_Paciente_DNI_Cliente RPxdueño = new FormReporte_Paciente_DNI_Cliente();
+            RPxdueño.MdiParent = this;
+            RPxdueño.Show();
+            foreach (Form formHijo in this.MdiChildren)
             {
-                MessageBox.Show("Usuario o Clave Incorrectos", "Error de Inicio de Sesion", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (formHijo != RPxdueño)
+                {
+                    formHijo.Close();
+                }
+            }
+        }
+
+        private void reporteEstadíticoDePacientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormReporte_Estadistica_Pacientes REP = new FormReporte_Estadistica_Pacientes();
+            REP.MdiParent = this;
+            REP.Show();
+            foreach (Form formHijo in this.MdiChildren)
+            {
+                if (formHijo != REP)
+                {
+                    formHijo.Close();
+                }
+            }
+        }
+
+        private void toolStripSplitButton2_ButtonClick(object sender, EventArgs e)
+        {
+            foreach (Form formularioHijo in this.MdiChildren)
+            {
+                formularioHijo.Close();
             }
         }
     }

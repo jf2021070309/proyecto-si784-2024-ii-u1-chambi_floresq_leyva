@@ -41,39 +41,35 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtRaza = new System.Windows.Forms.TextBox();
             this.cmbEspecie = new System.Windows.Forms.ComboBox();
+            this.pictpaciente = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtDirec = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtGenCliente = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.textDNI = new System.Windows.Forms.TextBox();
             this.txtCodCliente = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.btnAgregarProp = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btAgregar = new System.Windows.Forms.Button();
+            this.btBuscar = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
-            this.txtDocumentoBuscar = new System.Windows.Forms.TextBox();
-            this.txtNombreCliente = new System.Windows.Forms.TextBox();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.txtNomCliente = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.txtDocumentoCliente = new System.Windows.Forms.TextBox();
+            this.txtApelCliente = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.txtTelefonoCliente = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtCodDueño = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.btnAgregar = new System.Windows.Forms.Button();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.txtDNI = new System.Windows.Forms.TextBox();
-            this.txtNombreDueño = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtDocumentoDueño = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtTelefonoDueño = new System.Windows.Forms.TextBox();
+            this.txtTelCliente = new System.Windows.Forms.TextBox();
             this.btnRegistrar = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictpaciente = new System.Windows.Forms.PictureBox();
+            this.btnEliminar = new System.Windows.Forms.Button();
+            this.btnModificar = new System.Windows.Forms.Button();
+            this.dgvPaciente = new System.Windows.Forms.DataGridView();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictpaciente)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPaciente)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancelar
@@ -88,34 +84,36 @@
             // 
             // btnLimpiar
             // 
+            this.btnLimpiar.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnLimpiar.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(462, 466);
+            this.btnLimpiar.Location = new System.Drawing.Point(591, 507);
             this.btnLimpiar.Margin = new System.Windows.Forms.Padding(2);
             this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(68, 27);
+            this.btnLimpiar.Size = new System.Drawing.Size(73, 39);
             this.btnLimpiar.TabIndex = 38;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Text = "Cancelar";
+            this.btnLimpiar.UseVisualStyleBackColor = false;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click_1);
             // 
             // groupBox2
             // 
+            this.groupBox2.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.cmbGenero);
             this.groupBox2.Controls.Add(this.datePickPaciente);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.txtNombreMascota);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.pictpaciente);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.txtRaza);
             this.groupBox2.Controls.Add(this.cmbEspecie);
-            this.groupBox2.Location = new System.Drawing.Point(215, 80);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(117, 314);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(530, 215);
+            this.groupBox2.Size = new System.Drawing.Size(353, 187);
             this.groupBox2.TabIndex = 37;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Paciente";
@@ -124,12 +122,12 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(23, 149);
+            this.label6.Location = new System.Drawing.Point(23, 119);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 14);
             this.label6.TabIndex = 22;
-            this.label6.Text = "Genero: ";
+            this.label6.Text = "Género: ";
             // 
             // cmbGenero
             // 
@@ -138,7 +136,7 @@
             this.cmbGenero.Items.AddRange(new object[] {
             "Macho",
             "Hembra"});
-            this.cmbGenero.Location = new System.Drawing.Point(80, 147);
+            this.cmbGenero.Location = new System.Drawing.Point(80, 117);
             this.cmbGenero.Margin = new System.Windows.Forms.Padding(2);
             this.cmbGenero.Name = "cmbGenero";
             this.cmbGenero.Size = new System.Drawing.Size(92, 21);
@@ -146,7 +144,7 @@
             // 
             // datePickPaciente
             // 
-            this.datePickPaciente.Location = new System.Drawing.Point(152, 175);
+            this.datePickPaciente.Location = new System.Drawing.Point(145, 146);
             this.datePickPaciente.Margin = new System.Windows.Forms.Padding(2);
             this.datePickPaciente.Name = "datePickPaciente";
             this.datePickPaciente.Size = new System.Drawing.Size(192, 20);
@@ -156,7 +154,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(23, 45);
+            this.label2.Location = new System.Drawing.Point(23, 29);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(130, 14);
@@ -165,7 +163,7 @@
             // 
             // txtNombreMascota
             // 
-            this.txtNombreMascota.Location = new System.Drawing.Point(155, 43);
+            this.txtNombreMascota.Location = new System.Drawing.Point(155, 28);
             this.txtNombreMascota.Margin = new System.Windows.Forms.Padding(2);
             this.txtNombreMascota.Name = "txtNombreMascota";
             this.txtNombreMascota.Size = new System.Drawing.Size(94, 20);
@@ -175,7 +173,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(23, 80);
+            this.label3.Location = new System.Drawing.Point(23, 58);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(48, 14);
@@ -186,7 +184,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(23, 180);
+            this.label5.Location = new System.Drawing.Point(23, 149);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(122, 14);
@@ -197,7 +195,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(23, 111);
+            this.label4.Location = new System.Drawing.Point(23, 89);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 14);
@@ -206,7 +204,7 @@
             // 
             // txtRaza
             // 
-            this.txtRaza.Location = new System.Drawing.Point(81, 109);
+            this.txtRaza.Location = new System.Drawing.Point(81, 87);
             this.txtRaza.Margin = new System.Windows.Forms.Padding(2);
             this.txtRaza.Name = "txtRaza";
             this.txtRaza.Size = new System.Drawing.Size(94, 20);
@@ -220,35 +218,115 @@
             "Perro",
             "Gato",
             "Otros"});
-            this.cmbEspecie.Location = new System.Drawing.Point(83, 78);
+            this.cmbEspecie.Location = new System.Drawing.Point(83, 56);
             this.cmbEspecie.Margin = new System.Windows.Forms.Padding(2);
             this.cmbEspecie.Name = "cmbEspecie";
             this.cmbEspecie.Size = new System.Drawing.Size(92, 21);
             this.cmbEspecie.TabIndex = 8;
             this.cmbEspecie.SelectedIndexChanged += new System.EventHandler(this.cmbEspecie_SelectedIndexChanged);
             // 
+            // pictpaciente
+            // 
+            this.pictpaciente.Image = global::ProyectoFinal.Properties.Resources.registro;
+            this.pictpaciente.Location = new System.Drawing.Point(527, 38);
+            this.pictpaciente.Margin = new System.Windows.Forms.Padding(2);
+            this.pictpaciente.Name = "pictpaciente";
+            this.pictpaciente.Size = new System.Drawing.Size(171, 167);
+            this.pictpaciente.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictpaciente.TabIndex = 5;
+            this.pictpaciente.TabStop = false;
+            // 
             // groupBox3
             // 
+            this.groupBox3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.groupBox3.Controls.Add(this.label19);
+            this.groupBox3.Controls.Add(this.txtDirec);
+            this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.txtGenCliente);
+            this.groupBox3.Controls.Add(this.label18);
+            this.groupBox3.Controls.Add(this.textDNI);
+            this.groupBox3.Controls.Add(this.pictpaciente);
             this.groupBox3.Controls.Add(this.txtCodCliente);
             this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.btnAgregarProp);
-            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.btAgregar);
+            this.groupBox3.Controls.Add(this.btBuscar);
             this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.txtDocumentoBuscar);
-            this.groupBox3.Controls.Add(this.txtNombreCliente);
+            this.groupBox3.Controls.Add(this.txtBuscar);
+            this.groupBox3.Controls.Add(this.txtNomCliente);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.txtDocumentoCliente);
+            this.groupBox3.Controls.Add(this.txtApelCliente);
             this.groupBox3.Controls.Add(this.label16);
-            this.groupBox3.Controls.Add(this.txtTelefonoCliente);
-            this.groupBox3.Location = new System.Drawing.Point(215, 301);
+            this.groupBox3.Controls.Add(this.txtTelCliente);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(117, 66);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(530, 160);
+            this.groupBox3.Size = new System.Drawing.Size(732, 242);
             this.groupBox3.TabIndex = 35;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Propietario";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(10, 214);
+            this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(58, 14);
+            this.label19.TabIndex = 35;
+            this.label19.Text = "Dirección:";
+            // 
+            // txtDirec
+            // 
+            this.txtDirec.Enabled = false;
+            this.txtDirec.Location = new System.Drawing.Point(85, 213);
+            this.txtDirec.Margin = new System.Windows.Forms.Padding(2);
+            this.txtDirec.Name = "txtDirec";
+            this.txtDirec.Size = new System.Drawing.Size(356, 20);
+            this.txtDirec.TabIndex = 36;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(10, 160);
+            this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(48, 14);
+            this.label17.TabIndex = 34;
+            this.label17.Text = "Género:";
+            // 
+            // txtGenCliente
+            // 
+            this.txtGenCliente.Enabled = false;
+            this.txtGenCliente.Location = new System.Drawing.Point(85, 158);
+            this.txtGenCliente.Margin = new System.Windows.Forms.Padding(2);
+            this.txtGenCliente.Name = "txtGenCliente";
+            this.txtGenCliente.Size = new System.Drawing.Size(122, 20);
+            this.txtGenCliente.TabIndex = 33;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(10, 187);
+            this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(30, 14);
+            this.label18.TabIndex = 31;
+            this.label18.Text = "DNI:";
+            // 
+            // textDNI
+            // 
+            this.textDNI.Enabled = false;
+            this.textDNI.Location = new System.Drawing.Point(85, 185);
+            this.textDNI.Margin = new System.Windows.Forms.Padding(2);
+            this.textDNI.Name = "textDNI";
+            this.textDNI.Size = new System.Drawing.Size(103, 20);
+            this.textDNI.TabIndex = 32;
             // 
             // txtCodCliente
             // 
@@ -268,31 +346,33 @@
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(48, 14);
             this.label12.TabIndex = 30;
-            this.label12.Text = "Codigo:";
+            this.label12.Text = "Código:";
             // 
-            // btnAgregarProp
+            // btAgregar
             // 
-            this.btnAgregarProp.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgregarProp.Location = new System.Drawing.Point(353, 20);
-            this.btnAgregarProp.Margin = new System.Windows.Forms.Padding(2);
-            this.btnAgregarProp.Name = "btnAgregarProp";
-            this.btnAgregarProp.Size = new System.Drawing.Size(79, 26);
-            this.btnAgregarProp.TabIndex = 28;
-            this.btnAgregarProp.Text = "Agregar";
-            this.btnAgregarProp.UseVisualStyleBackColor = true;
-            this.btnAgregarProp.Click += new System.EventHandler(this.btnAgregarProp_Click);
+            this.btAgregar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btAgregar.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btAgregar.Location = new System.Drawing.Point(337, 68);
+            this.btAgregar.Margin = new System.Windows.Forms.Padding(2);
+            this.btAgregar.Name = "btAgregar";
+            this.btAgregar.Size = new System.Drawing.Size(79, 33);
+            this.btAgregar.TabIndex = 28;
+            this.btAgregar.Text = "Agregar";
+            this.btAgregar.UseVisualStyleBackColor = false;
+            this.btAgregar.Click += new System.EventHandler(this.btnAgregarProp_Click);
             // 
-            // button2
+            // btBuscar
             // 
-            this.button2.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(242, 20);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(73, 26);
-            this.button2.TabIndex = 27;
-            this.button2.Text = "Buscar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btBuscar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btBuscar.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btBuscar.Location = new System.Drawing.Point(337, 32);
+            this.btBuscar.Margin = new System.Windows.Forms.Padding(2);
+            this.btBuscar.Name = "btBuscar";
+            this.btBuscar.Size = new System.Drawing.Size(79, 32);
+            this.btBuscar.TabIndex = 27;
+            this.btBuscar.Text = "Buscar";
+            this.btBuscar.UseVisualStyleBackColor = false;
+            this.btBuscar.Click += new System.EventHandler(this.button2_Click);
             // 
             // label13
             // 
@@ -305,22 +385,22 @@
             this.label13.TabIndex = 26;
             this.label13.Text = "Ingrese Documento: ";
             // 
-            // txtDocumentoBuscar
+            // txtBuscar
             // 
-            this.txtDocumentoBuscar.Location = new System.Drawing.Point(127, 20);
-            this.txtDocumentoBuscar.Margin = new System.Windows.Forms.Padding(2);
-            this.txtDocumentoBuscar.Name = "txtDocumentoBuscar";
-            this.txtDocumentoBuscar.Size = new System.Drawing.Size(104, 20);
-            this.txtDocumentoBuscar.TabIndex = 25;
+            this.txtBuscar.Location = new System.Drawing.Point(127, 20);
+            this.txtBuscar.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(104, 20);
+            this.txtBuscar.TabIndex = 25;
             // 
-            // txtNombreCliente
+            // txtNomCliente
             // 
-            this.txtNombreCliente.Enabled = false;
-            this.txtNombreCliente.Location = new System.Drawing.Point(84, 77);
-            this.txtNombreCliente.Margin = new System.Windows.Forms.Padding(2);
-            this.txtNombreCliente.Name = "txtNombreCliente";
-            this.txtNombreCliente.Size = new System.Drawing.Size(129, 20);
-            this.txtNombreCliente.TabIndex = 17;
+            this.txtNomCliente.Enabled = false;
+            this.txtNomCliente.Location = new System.Drawing.Point(84, 77);
+            this.txtNomCliente.Margin = new System.Windows.Forms.Padding(2);
+            this.txtNomCliente.Name = "txtNomCliente";
+            this.txtNomCliente.Size = new System.Drawing.Size(178, 20);
+            this.txtNomCliente.TabIndex = 17;
             // 
             // label14
             // 
@@ -329,9 +409,9 @@
             this.label14.Location = new System.Drawing.Point(10, 108);
             this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(71, 14);
+            this.label14.Size = new System.Drawing.Size(62, 14);
             this.label14.TabIndex = 24;
-            this.label14.Text = "Documento:";
+            this.label14.Text = "Apellidos :";
             // 
             // label15
             // 
@@ -340,18 +420,18 @@
             this.label15.Location = new System.Drawing.Point(10, 79);
             this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(53, 14);
+            this.label15.Size = new System.Drawing.Size(61, 14);
             this.label15.TabIndex = 18;
-            this.label15.Text = "Nombre:";
+            this.label15.Text = "Nombres :";
             // 
-            // txtDocumentoCliente
+            // txtApelCliente
             // 
-            this.txtDocumentoCliente.Enabled = false;
-            this.txtDocumentoCliente.Location = new System.Drawing.Point(85, 105);
-            this.txtDocumentoCliente.Margin = new System.Windows.Forms.Padding(2);
-            this.txtDocumentoCliente.Name = "txtDocumentoCliente";
-            this.txtDocumentoCliente.Size = new System.Drawing.Size(122, 20);
-            this.txtDocumentoCliente.TabIndex = 23;
+            this.txtApelCliente.Enabled = false;
+            this.txtApelCliente.Location = new System.Drawing.Point(85, 105);
+            this.txtApelCliente.Margin = new System.Windows.Forms.Padding(2);
+            this.txtApelCliente.Name = "txtApelCliente";
+            this.txtApelCliente.Size = new System.Drawing.Size(177, 20);
+            this.txtApelCliente.TabIndex = 23;
             // 
             // label16
             // 
@@ -362,205 +442,100 @@
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(59, 14);
             this.label16.TabIndex = 21;
-            this.label16.Text = "Telefono: ";
+            this.label16.Text = "Teléfono: ";
             // 
-            // txtTelefonoCliente
+            // txtTelCliente
             // 
-            this.txtTelefonoCliente.Enabled = false;
-            this.txtTelefonoCliente.Location = new System.Drawing.Point(85, 131);
-            this.txtTelefonoCliente.Margin = new System.Windows.Forms.Padding(2);
-            this.txtTelefonoCliente.Name = "txtTelefonoCliente";
-            this.txtTelefonoCliente.Size = new System.Drawing.Size(103, 20);
-            this.txtTelefonoCliente.TabIndex = 22;
+            this.txtTelCliente.Enabled = false;
+            this.txtTelCliente.Location = new System.Drawing.Point(85, 131);
+            this.txtTelCliente.Margin = new System.Windows.Forms.Padding(2);
+            this.txtTelCliente.Name = "txtTelCliente";
+            this.txtTelCliente.Size = new System.Drawing.Size(103, 20);
+            this.txtTelCliente.TabIndex = 22;
             // 
-            // groupBox1
+            // btnRegistrar
             // 
-            this.groupBox1.Controls.Add(this.txtCodDueño);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.btnAgregar);
-            this.groupBox1.Controls.Add(this.btnBuscar);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.txtDNI);
-            this.groupBox1.Controls.Add(this.txtNombreDueño);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.txtDocumentoDueño);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.txtTelefonoDueño);
-            this.groupBox1.Location = new System.Drawing.Point(275, 301);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(376, 160);
-            this.groupBox1.TabIndex = 36;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Propietario";
+            this.btnRegistrar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnRegistrar.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrar.Location = new System.Drawing.Point(312, 507);
+            this.btnRegistrar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnRegistrar.Name = "btnRegistrar";
+            this.btnRegistrar.Size = new System.Drawing.Size(79, 39);
+            this.btnRegistrar.TabIndex = 34;
+            this.btnRegistrar.Text = "Registrar";
+            this.btnRegistrar.UseVisualStyleBackColor = false;
+            this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click_1);
             // 
-            // txtCodDueño
+            // btnEliminar
             // 
-            this.txtCodDueño.Location = new System.Drawing.Point(60, 49);
-            this.txtCodDueño.Margin = new System.Windows.Forms.Padding(2);
-            this.txtCodDueño.Name = "txtCodDueño";
-            this.txtCodDueño.Size = new System.Drawing.Size(129, 20);
-            this.txtCodDueño.TabIndex = 29;
+            this.btnEliminar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnEliminar.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminar.Location = new System.Drawing.Point(502, 507);
+            this.btnEliminar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(75, 39);
+            this.btnEliminar.TabIndex = 43;
+            this.btnEliminar.Text = "Eliminar";
+            this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
-            // label11
+            // btnModificar
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(10, 51);
-            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(48, 14);
-            this.label11.TabIndex = 30;
-            this.label11.Text = "Codigo:";
+            this.btnModificar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnModificar.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnModificar.Location = new System.Drawing.Point(407, 507);
+            this.btnModificar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnModificar.Name = "btnModificar";
+            this.btnModificar.Size = new System.Drawing.Size(77, 39);
+            this.btnModificar.TabIndex = 42;
+            this.btnModificar.Text = "Modificar";
+            this.btnModificar.UseVisualStyleBackColor = false;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
-            // btnAgregar
+            // dgvPaciente
             // 
-            this.btnAgregar.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgregar.Location = new System.Drawing.Point(308, 20);
-            this.btnAgregar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(56, 19);
-            this.btnAgregar.TabIndex = 28;
-            this.btnAgregar.Text = "Agregar";
-            this.btnAgregar.UseVisualStyleBackColor = true;
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscar.Location = new System.Drawing.Point(242, 20);
-            this.btnBuscar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(56, 18);
-            this.btnBuscar.TabIndex = 27;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(10, 24);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(115, 14);
-            this.label10.TabIndex = 26;
-            this.label10.Text = "Ingrese Documento: ";
-            // 
-            // txtDNI
-            // 
-            this.txtDNI.Location = new System.Drawing.Point(127, 20);
-            this.txtDNI.Margin = new System.Windows.Forms.Padding(2);
-            this.txtDNI.Name = "txtDNI";
-            this.txtDNI.Size = new System.Drawing.Size(104, 20);
-            this.txtDNI.TabIndex = 25;
-            // 
-            // txtNombreDueño
-            // 
-            this.txtNombreDueño.Location = new System.Drawing.Point(65, 76);
-            this.txtNombreDueño.Margin = new System.Windows.Forms.Padding(2);
-            this.txtNombreDueño.Name = "txtNombreDueño";
-            this.txtNombreDueño.Size = new System.Drawing.Size(129, 20);
-            this.txtNombreDueño.TabIndex = 17;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(10, 108);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(71, 14);
-            this.label9.TabIndex = 24;
-            this.label9.Text = "Documento:";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(10, 79);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 14);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "Nombre:";
-            // 
-            // txtDocumentoDueño
-            // 
-            this.txtDocumentoDueño.Location = new System.Drawing.Point(80, 108);
-            this.txtDocumentoDueño.Margin = new System.Windows.Forms.Padding(2);
-            this.txtDocumentoDueño.Name = "txtDocumentoDueño";
-            this.txtDocumentoDueño.Size = new System.Drawing.Size(122, 20);
-            this.txtDocumentoDueño.TabIndex = 23;
+            this.dgvPaciente.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dgvPaciente.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvPaciente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPaciente.Location = new System.Drawing.Point(484, 315);
+            this.dgvPaciente.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvPaciente.Name = "dgvPaciente";
+            this.dgvPaciente.RowHeadersVisible = false;
+            this.dgvPaciente.RowHeadersWidth = 51;
+            this.dgvPaciente.RowTemplate.Height = 24;
+            this.dgvPaciente.Size = new System.Drawing.Size(365, 186);
+            this.dgvPaciente.TabIndex = 44;
+            this.dgvPaciente.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPaciente_CellClick);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(10, 135);
+            this.label8.Font = new System.Drawing.Font("Impact", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.label8.Location = new System.Drawing.Point(443, 14);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 14);
-            this.label8.TabIndex = 21;
-            this.label8.Text = "Telefono: ";
-            // 
-            // txtTelefonoDueño
-            // 
-            this.txtTelefonoDueño.Location = new System.Drawing.Point(68, 133);
-            this.txtTelefonoDueño.Margin = new System.Windows.Forms.Padding(2);
-            this.txtTelefonoDueño.Name = "txtTelefonoDueño";
-            this.txtTelefonoDueño.Size = new System.Drawing.Size(103, 20);
-            this.txtTelefonoDueño.TabIndex = 22;
-            // 
-            // btnRegistrar
-            // 
-            this.btnRegistrar.Font = new System.Drawing.Font("Gadugi", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistrar.Location = new System.Drawing.Point(386, 466);
-            this.btnRegistrar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnRegistrar.Name = "btnRegistrar";
-            this.btnRegistrar.Size = new System.Drawing.Size(72, 27);
-            this.btnRegistrar.TabIndex = 34;
-            this.btnRegistrar.Text = "Registrar";
-            this.btnRegistrar.UseVisualStyleBackColor = true;
-            this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click_1);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Gadugi", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.LightSeaGreen;
-            this.label1.Location = new System.Drawing.Point(362, 27);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(249, 32);
-            this.label1.TabIndex = 33;
-            this.label1.Text = "Registrar Paciente";
-            // 
-            // pictpaciente
-            // 
-            this.pictpaciente.Image = global::ProyectoFinal.Properties.Resources.registrarmascota;
-            this.pictpaciente.Location = new System.Drawing.Point(353, 32);
-            this.pictpaciente.Margin = new System.Windows.Forms.Padding(2);
-            this.pictpaciente.Name = "pictpaciente";
-            this.pictpaciente.Size = new System.Drawing.Size(146, 136);
-            this.pictpaciente.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictpaciente.TabIndex = 5;
-            this.pictpaciente.TabStop = false;
+            this.label8.Size = new System.Drawing.Size(159, 39);
+            this.label8.TabIndex = 81;
+            this.label8.Text = "PACIENTES";
             // 
             // RegistrarPaciente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = global::ProyectoFinal.Properties.Resources.PATITAS;
             this.ClientSize = new System.Drawing.Size(942, 582);
             this.ControlBox = false;
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.dgvPaciente);
+            this.Controls.Add(this.btnEliminar);
+            this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnRegistrar);
-            this.Controls.Add(this.label1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "RegistrarPaciente";
@@ -569,11 +544,10 @@
             this.Load += new System.EventHandler(this.RegistrarPaciente_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictpaciente)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictpaciente)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPaciente)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -595,32 +569,28 @@
         private System.Windows.Forms.TextBox txtRaza;
         private System.Windows.Forms.ComboBox cmbEspecie;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox txtCodCliente;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button btnAgregarProp;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btAgregar;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txtDocumentoBuscar;
-        private System.Windows.Forms.TextBox txtNombreCliente;
+        private System.Windows.Forms.TextBox txtNomCliente;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox txtDocumentoCliente;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox txtTelefonoCliente;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtCodDueño;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button btnAgregar;
-        private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtDNI;
-        private System.Windows.Forms.TextBox txtNombreDueño;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtDocumentoDueño;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtTelefonoDueño;
+        private System.Windows.Forms.TextBox txtTelCliente;
         private System.Windows.Forms.Button btnRegistrar;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txtDirec;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtGenCliente;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox textDNI;
+        private System.Windows.Forms.TextBox txtCodCliente;
+        private System.Windows.Forms.TextBox txtBuscar;
+        private System.Windows.Forms.TextBox txtApelCliente;
+        private System.Windows.Forms.Button btBuscar;
+        private System.Windows.Forms.Button btnEliminar;
+        private System.Windows.Forms.Button btnModificar;
+        private System.Windows.Forms.DataGridView dgvPaciente;
+        private System.Windows.Forms.Label label8;
     }
 }

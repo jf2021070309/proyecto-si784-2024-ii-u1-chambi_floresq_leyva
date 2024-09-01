@@ -13,8 +13,6 @@ namespace ProyectoFinal
 {
     public partial class FormAdmin : Form
     {
-        StreamReader lectura;
-        static StreamWriter escribir;
         bool existe;
         string usuario, password;
         string codunico;
@@ -53,63 +51,6 @@ namespace ProyectoFinal
             password = txtRegPassword.Text;
             codunico = txtCodUnico.Text;
             string captcha = txtcaptcha.Text;
-            try
-            {
-                if (captcha.Equals(codunico) && codunico != "")
-                {
-                    if (usuario != "" && password != "")
-                    {
-                        lectura = File.OpenText("Ficheros\\usuarios.txt");
-                        texto = lectura.ReadLine();
-                        while (texto != null && existe == false)
-                        {
-                            campo = texto.Split(';');
-                            if (campo[0].Trim().Equals(usuario))
-                            {
-                                existe = true;
-                                break;
-                            }
-                            texto = lectura.ReadLine();
-                        }
-                        lectura.Close();
-                        escribir = File.AppendText("Ficheros\\usuarios.txt");
-
-                        if (existe == false)
-                        {
-                            existe = false;
-                            usuario = txtRegUsuario.Text;
-                            password = txtRegPassword.Text;
-                            escribir.WriteLine(usuario + ";" + password);
-                            MessageBox.Show("El usuario se ha registrado correctamente...", "Admin", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            txtCodUnico.Text = "";
-                            txtRegPassword.Text = "";
-                            txtRegUsuario.Text = "";
-                            GenerarCaptch();
-                        }
-                        else
-                        {
-                            MessageBox.Show("El usuario ya existe...", "Admin", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        }
-                        escribir.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Faltan Completar datos... ", "Admin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-                else if (codunico == "")
-                {
-                    MessageBox.Show("Ingrese el Codigo Captcha...", "Admin", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                else
-                {
-                    MessageBox.Show("El codigo Captcha de administrador es incorrecto...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
     }
 }
