@@ -155,7 +155,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 13);
             this.label2.TabIndex = 23;
-            this.label2.Text = "V.45.0.0";
+            this.label2.Text = "V.89.0.0";
             // 
             // label1
             // 

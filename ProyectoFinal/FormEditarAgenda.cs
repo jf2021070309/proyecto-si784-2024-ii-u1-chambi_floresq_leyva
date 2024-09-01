@@ -1,4 +1,4 @@
-﻿using ProyectoFinal.Clases;
+﻿using ProyectoFinal.Modelos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,138 +14,310 @@ namespace ProyectoFinal
 {
     public partial class FormEditarAgenda : Form
     {
-        StreamReader lectura;
-        static StreamWriter escribir;
-        bool existe;
-        string Nombres, Apellidos, NomMascota, Telefono, Motivo, Hora, id;
+        string motivo, id_cliente, hora, estado, tamaño;
+        DateTime fecha;
+        int id_cita;
 
-        private ManejadorCitas manejadorCitas;
-        public FormEditarAgenda()
+        private void FormEditarAgenda_Load(object sender, EventArgs e)
         {
-            InitializeComponent();
-            manejadorCitas = new ManejadorCitas(".\\Ficheros\\citas.txt");
+            rbtnDNI.Checked = true;
+            MostrarClientes();
+            Desactivar();
         }
 
-        private void btnEditarCita_Click(object sender, EventArgs e)
+        private void rbtnDNI_CheckedChanged(object sender, EventArgs e)
         {
-            string idCitaBuscada = txtIdCita.Text.Trim();
-            bool idCitaEncontrada = false;
+            dgvTabla.DataSource = null;
+            Desactivar();
+            dgvTabla.Rows.Clear();
+            MostrarClientes();
+            txtId.Text = "";
+        }
 
-            // Aquí leer el archivo y buscar si la ID existe
-            using (StreamReader sr = new StreamReader(".\\Ficheros\\citas.txt"))
+        private void rbtnId_CheckedChanged(object sender, EventArgs e)
+        {
+            dgvTabla.DataSource = null;
+            Desactivar();
+            dgvTabla.Rows.Clear();
+            MostrarClientes();
+            txtDNI.Text = "";
+
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            try
             {
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                using (var dc = new MSOFTVETDataContext())
                 {
-                    string[] campos = line.Split(';');
-                    if (campos[0].Trim() == idCitaBuscada)
+                    // Obtén el ID de la cita desde txtCita
+                    if (int.TryParse(txtCita.Text, out int idCita))
                     {
-                        idCitaEncontrada = true;
-                        break;
+                        // Obtén los valores de los controles
+                        motivo = txtMotivo.Text;
+                        fecha = dtPicker1.Value.Date;
+                        hora = txtHora.Text;
+                        estado = cmbEstado.SelectedItem.ToString();
+                        tamaño = cmbTamano.SelectedItem.ToString();
+
+                        // Llamada al procedimiento almacenado para editar la cita
+                        dc.SP_EditarCita(idCita, motivo, fecha, hora, estado, tamaño);
+
+                        MessageBox.Show("Cita editada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MostrarHistorialCitas();
+                        cmbTamano.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("ID de cita no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
-
-            if (idCitaEncontrada)
+            catch (Exception ex)
             {
-                txtApellidos.Enabled = true;
-                txtHora.Enabled = true;
-                txtNombres.Enabled = true;
-                txtNomMascota.Enabled = true;
-                txtTelefono.Enabled = true;
-                cmbMotivo.Enabled = true;
-                txtIdCita.Enabled = false;
-                dateTimePicker1.Enabled = true;
+                MessageBox.Show($"Error al editar la cita: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            if (rbtnDNI.Checked)
+            {
+                BuscarClientePorDNI();
+            }
+            else if (rbtnId.Checked)
+            {
+                BuscarClientePorID();
+            }
+        }
+
+        public FormEditarAgenda()
+        {
+            InitializeComponent();
+        }
+
+        public void Limpiar()
+        {
+            txtMotivo.Text = "";
+            txtHora.Text = "";
+            txtCita.Text = "";
+            txtDNI.Text = string.Empty;
+            txtId.Text = string.Empty;
+            rbtnDNI.Checked = false;
+            rbtnId.Checked = false;
+        }
+
+        public void Desactivar()
+        {
+            txtMotivo.Enabled = false;
+            txtHora.Enabled = false;
+            dtPicker1.Enabled = false;
+            btnEditar.Enabled = false;
+            cmbEstado.Enabled = false;
+            cmbTamano.Enabled = false;
+            txtCita.Enabled = false;
+            btnBuscarCita.Enabled = false;
+        }
+
+        public void Activar()
+        {
+            txtMotivo.Enabled = true;
+            txtHora.Enabled = true;
+            dtPicker1.Enabled = true;
+            btnEditar.Enabled = true;
+            cmbEstado.Enabled = true;
+        }
+
+        public void BuscarClientePorDNI()
+        {
+            MSOFTVETDataContext dc = new MSOFTVETDataContext();
+
+            string dniBusqueda = txtDNI.Text;
+            var clienteEncontrado = dc.V_Cliente.FirstOrDefault(c => c.DNI == dniBusqueda);
+
+            if (clienteEncontrado != null)
+            {
+                id_cliente = clienteEncontrado.Cod_Cliente.ToString();
+                MostrarHistorialCitas();
             }
             else
             {
-                MessageBox.Show("Error: No se ha encontrado el idCita", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Cliente no encontrado", "Busqueda", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                cmbTamano.Enabled = false;
+                txtCita.Enabled = false;
             }
         }
 
-        public void BloquearDatos()
+        private void button1_Click(object sender, EventArgs e)
         {
-            txtApellidos.Enabled = false;
-            txtHora.Enabled = false;
-            txtNombres.Enabled = false;
-            txtNomMascota.Enabled = false;
-            txtTelefono.Enabled = false;
-            cmbMotivo.Enabled = false;
-            txtIdCita.Enabled = true;
-            dateTimePicker1.Enabled = false;
-        }
-
-        public void LimpiarDatos()
-        {
-            txtIdCita.Text = "";
-            txtNombres.Text = "";
-            txtApellidos.Text = "";
-            txtNomMascota.Text = "";
-            txtTelefono.Text = "";
-            txtHora.Text = "";
-            cmbMotivo.SelectedIndex = -1;
-        }
-
-        private void btnGuardarCambios_Click(object sender, EventArgs e)
-        {
-            
-            string fechaedit = dateTimePicker1.Value.Date.ToString("dd/MM/yyyy");
-            string nuevosDatos = $"{txtIdCita.Text};{txtNombres.Text};{txtApellidos.Text};{txtNomMascota.Text};{txtTelefono.Text};{cmbMotivo.SelectedItem};{fechaedit};{txtHora.Text}";
-
-            // Leer el contenido actual del archivo
-            List<string> lineas = new List<string>();
-            using (StreamReader reader = new StreamReader(".\\Ficheros\\citas.txt"))
+            try
             {
-                string linea;
-                while ((linea = reader.ReadLine()) != null)
+                using (var dc = new MSOFTVETDataContext())
                 {
-                    lineas.Add(linea);
+                    if (int.TryParse(txtCita.Text, out int idCita))
+                    {
+                        // Buscar la cita por ID
+                        var cita = dc.V_CargarCitas.FirstOrDefault(c => c.ID_Cita == idCita);
+
+                        if (cita != null)
+                        {
+                            // Mostrar los datos en los controles
+                            txtMotivo.Text = cita.Motivo;
+                            dtPicker1.Value = cita.Fecha;
+                            txtHora.Text = cita.Hora;
+                            cmbEstado.SelectedItem = cita.Estado;
+                            cmbTamano.SelectedItem = cita.Tamaño;
+                            Activar();
+                            btnBuscar.Enabled = false;
+                            cmbTamano.Enabled = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Cita no encontrada", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("ID de cita no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
-
-            // Buscar la línea correspondiente con el ID de cita y reemplazar con los nuevos datos
-            for (int i = 0; i < lineas.Count; i++)
+            catch (Exception ex)
             {
-                string[] campos = lineas[i].Split(';');
-                if (campos[0].Trim() == txtIdCita.Text.Trim())
+                MessageBox.Show($"Error al buscar la cita: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvTabla_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0)
                 {
-                    lineas[i] = nuevosDatos;
-                    break;
+                    DataGridViewRow selectedRow = dgvTabla.Rows[e.RowIndex];
+
+                    // Obtén los valores de la fila seleccionada
+                    id_cita = Convert.ToInt32(selectedRow.Cells["ID_Cita"].Value);
+                    txtCita.Text = id_cita.ToString();
+                    txtMotivo.Text = selectedRow.Cells["Motivo"].Value?.ToString();
+                    dtPicker1.Value = Convert.ToDateTime(selectedRow.Cells["Fecha"].Value);
+                    txtHora.Text = selectedRow.Cells["Hora"].Value?.ToString();
+                    cmbEstado.SelectedItem = selectedRow.Cells["Estado"].Value?.ToString();
+                    cmbTamano.SelectedItem = selectedRow.Cells["Tamaño"].Value?.ToString();
+                    cmbTamano.Enabled = true;
+                    Activar();
                 }
             }
-
-            // Escribir las líneas actualizadas de vuelta al archivo
-            using (StreamWriter writer = new StreamWriter(".\\Ficheros\\citas.txt"))
+            catch
             {
-                foreach (string linea in lineas)
+                if (e.RowIndex >= 0)
                 {
-                    writer.WriteLine(linea);
+                    DataGridViewRow selectedRow = dgvTabla.Rows[e.RowIndex];
+
+                    if (rbtnDNI.Checked)
+                    {
+                        txtDNI.Text = selectedRow.Cells["DNI"].Value?.ToString();
+                    }
+                    else if (rbtnId.Checked)
+                    {
+                        txtId.Text = selectedRow.Cells["Cod_Cliente"].Value?.ToString();
+                    }
                 }
             }
-            CargarTabla();
-            LimpiarDatos();
-            BloquearDatos();
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
-            calendario.SetDate(dateTimePicker1.Value.Date);
+            Desactivar();
+            btnBuscar.Enabled = true;
+            Limpiar();
+            rbtnDNI.Checked = true;
         }
 
-        int contador;
-        public void CargarTabla()
+        public void BuscarClientePorID()
         {
-            dgvTabla.Rows.Clear();
-            List<Cita> citas = manejadorCitas.LeerCitas();
+            MSOFTVETDataContext dc = new MSOFTVETDataContext();
 
-            foreach (Cita cita in citas)
+            if (int.TryParse(txtId.Text, out int idBusqueda))
             {
-                dgvTabla.Rows.Add(cita.Id, cita.Nombres, cita.Apellidos, cita.NomMascota, cita.Telefono, cita.Motivo, cita.Fecha, cita.Hora);
+                var clienteEncontrado = dc.V_Cliente.FirstOrDefault(c => c.Cod_Cliente == idBusqueda);
+
+                if (clienteEncontrado != null)
+                {
+                    id_cliente = clienteEncontrado.Cod_Cliente.ToString();
+                    MostrarHistorialCitas();
+                }
+                else
+                {
+                    MessageBox.Show("Cliente no encontrado", "Busqueda", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    cmbTamano.Enabled = false;
+                    txtCita.Enabled = false;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Id no valido", "Busqueda", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
-        private void FormEditarAgenda_Load(object sender, EventArgs e)
+
+        public void MostrarHistorialCitas()
         {
-            CargarTabla();
+            try
+            {
+                MSOFTVETDataContext dc = new MSOFTVETDataContext();
+                var historialCitas = dc.V_CargarCitas
+                    .Where(c => c.Cod_Cliente == Convert.ToInt32(id_cliente))
+                    .Select(c => new
+                    {
+                        c.ID_Cita,
+                        c.Nombre,
+                        c.Apellido,
+                        c.Paciente,
+                        c.Motivo,
+                        c.Tamaño,
+                        c.Fecha,
+                        c.Hora,
+                        c.Estado
+                    })
+                    .ToList();
+
+                if (historialCitas.Any())
+                {
+                    dgvTabla.DataSource = historialCitas;
+                    dgvTabla.Columns[0].Width = 90;
+                    cmbTamano.Enabled = false;
+                    txtCita.Enabled=true;
+                    btnBuscarCita.Enabled = true;
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron citas para este cliente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar el historial de citas: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+        private void MostrarClientes()
+        {
+            try
+            {
+                using (var dc = new MSOFTVETDataContext())
+                {
+                    var todosClientes = dc.V_Cliente.Select(c => new { c.Cod_Cliente, c.Nombre, c.Apellido, c.DNI }).ToList();
+
+                    dgvTabla.DataSource = null;
+                    dgvTabla.DataSource = todosClientes;
+                    dgvTabla.Columns[0].Width = 90;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al mostrar todos los clientes: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

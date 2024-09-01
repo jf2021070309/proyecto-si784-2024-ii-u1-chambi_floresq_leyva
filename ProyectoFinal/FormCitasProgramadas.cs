@@ -1,74 +1,135 @@
 ﻿using ProyectoFinal.Clases;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProyectoFinal
 {
     public partial class FormCitasProgramadas : Form
     {
-        //StreamReader lectura;
-        //bool existe;
-        //string Nombres, Apellidos, NomMascota, Telefono, Motivo, Hora, id, fecha;
+        private ClsCita objCita = new ClsCita();
 
-        private ManejadorCitas manejadorCitas;
         public FormCitasProgramadas()
         {
             InitializeComponent();
-            manejadorCitas = new ManejadorCitas(".\\Ficheros\\citas.txt");
         }
 
         private void btnVerTodo_Click(object sender, EventArgs e)
         {
-            CargarTabla();
-        }
-
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-            calendario.SetDate(dateTimePicker1.Value.Date);
+            MostrarCitas();
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            dgvTabla.Rows.Clear();
-            string fechaSeleccionada = dateTimePicker1.Value.Date.ToString("dd/MM/yyyy");
-            List<Cita> citas = manejadorCitas.LeerCitas();
-
-            foreach (Cita cita in citas)
+            try
             {
-                if (cita.Fecha.Equals(fechaSeleccionada))
-                {
-                    dgvTabla.Rows.Add(cita.Id, cita.Nombres, cita.Apellidos, cita.NomMascota, cita.Telefono, cita.Motivo, cita.Fecha, cita.Hora);
-                }
+                DateTime fechaSeleccionada = dtPicker1.Value.Date;
+                var citasFecha = objCita.ObtenerCitasPorFecha(fechaSeleccionada);
+                dgvCitas.DataSource = citasFecha;
+                dgvCitas.Columns[0].Width = 90;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar las citas para la fecha seleccionada: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        int contador;
-        string texto;
-        String[] campo = new string[7];
-
         private void FormCitasProgramadas_Load(object sender, EventArgs e)
         {
-            var fechaactual = DateTime.Now;
-            dateTimePicker1.MinDate = fechaactual;
-            calendario.MinDate = fechaactual;
-            CargarTabla();
+            var citasPendientes = objCita.Cargar();
+            dgvCitas.DataSource = citasPendientes;
+            dgvCitas.Columns[0].Width = 90;
         }
-        public void CargarTabla()
-        {
-            dgvTabla.Rows.Clear();
-            List<Cita> citas = manejadorCitas.LeerCitas();
 
-            foreach (Cita cita in citas)
+        public void MostrarCitas()
+        {
+            try
             {
-                dgvTabla.Rows.Add(cita.Id, cita.Nombres, cita.Apellidos, cita.NomMascota, cita.Telefono, cita.Motivo, cita.Fecha, cita.Hora);
+                var todasCitas = objCita.ObtenerTodasCitas();
+                dgvCitas.DataSource = todasCitas;
+                dgvCitas.Columns[0].Width = 90;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar las citas: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (int.TryParse(txtCancelar.Text, out int idCita))
+                {
+                    // Llamar al método para cancelar la cita
+                    objCita.CancelarCita(idCita);
+
+                    // Mostrar mensaje de éxito y recargar las citas
+                    MessageBox.Show("Cita cancelada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MostrarCitas();
+                }
+                else
+                {
+                    MessageBox.Show("ID de cita no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cancelar la cita: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnVerEstado_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Obter el estado seleccionado del ComboBox
+                string estadoSeleccionado = cmbEstado.SelectedItem?.ToString();
+
+                if (string.IsNullOrEmpty(estadoSeleccionado))
+                {
+                    MessageBox.Show("Por favor, selecciona un estado antes de continuar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Filtrar las citas según el estado seleccionado
+                var citasConEstado = objCita.ObtenerCitasPorEstado(estadoSeleccionado);
+
+                // Asignar la lista de citas al DataGridView
+                dgvCitas.DataSource = citasConEstado;
+                dgvCitas.Columns[0].Width = 90;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar las citas con el estado seleccionado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvCitas_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            int estadoColumnIndex = dgvCitas.Columns["Estado"].Index;
+
+            // Verificar si la celda actual pertenece a la columna de Estado
+            if (e.ColumnIndex == estadoColumnIndex && e.RowIndex >= 0)
+            {
+                // Obtener el valor de la celda actual
+                string estado = dgvCitas.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+
+                // Asignar colores según el estado
+                if (estado == "Pendiente")
+                {
+                    e.CellStyle.BackColor = System.Drawing.Color.Yellow;
+                    e.CellStyle.ForeColor = System.Drawing.Color.Black;
+                }
+                else if (estado == "Cancelado")
+                {
+                    e.CellStyle.BackColor = System.Drawing.Color.Red;
+                    e.CellStyle.ForeColor = System.Drawing.Color.White;
+                }
+                else if (estado == "Atendido")
+                {
+                    e.CellStyle.BackColor = System.Drawing.Color.Green;
+                    e.CellStyle.ForeColor = System.Drawing.Color.White;
+                }
             }
         }
     }
