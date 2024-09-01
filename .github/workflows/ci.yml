@@ -28,17 +28,13 @@ jobs:
         run: nuget restore $env:Solution_Name
 
       - name: Construir el Proyecto
-        run: msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory 
-
-      - name: Verificar la Creación del Directorio de Salida
         run: |
-          if (Test-Path $env:Output_Directory) {
-            Write-Output "La carpeta de salida existe: $env:Output_Directory"
-          } else {
-            Write-Error "La carpeta de salida no se creó."
-          }
+          msbuild $env:Solution_Name /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7.2 /p:OutputPath=$env:Output_Directory | Tee-Object -FilePath build.log
+          Write-Output "Resultado del Build:"
+          Get-Content build.log
 
-      - name: Listar Archivos en el Directorio de Construcción
-        run: |
-          Write-Output "Contenido de $env:Output_Directory:"
-          dir $env:Output_Directory
+      - name: Subir build.log como Artefacto
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-log
+          path: build.log
